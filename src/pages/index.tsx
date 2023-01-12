@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 
 import { api } from "../utils/api";
 
-import { FaPlay, FaRegBookmark } from "react-icons/fa";
+import { FaClock, FaRegClock, FaRegBookmark, FaRegHeart } from "react-icons/fa";
+import Navbar from "../components/Navbar";
 
 const Home: NextPage = () => {
   const [movie, setMovie] = useState({});
@@ -38,6 +39,8 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
+      <Navbar />
+
       <main>
         <section className="relative h-screen w-full">
           <img
@@ -61,20 +64,20 @@ const Home: NextPage = () => {
               <div className="py-4" />
 
               <div className="flex gap-2">
-                <button className="flex items-center gap-2 rounded bg-white px-2 py-1 text-xl font-medium text-black">
-                  <FaPlay className="text-lg" />
-                  Play
+                <button className="flex items-center gap-2 rounded bg-slate-50 px-2 py-1 text-xl font-medium text-black">
+                  <FaRegHeart className="text-lg" />
+                  Favorites
                 </button>
 
-                <button className="flex items-center gap-2 rounded bg-neutral-400/50 px-2 py-1 text-xl font-medium">
-                  <FaRegBookmark className="text-lg" />
+                <button className="flex items-center gap-2 rounded bg-slate-50/50 px-2 py-1 text-xl font-medium text-black">
+                  <FaRegClock className="text-lg" />
                   Watch Later
                 </button>
               </div>
 
               <div className="py-2" />
 
-              <p className="">{movie?.overview}</p>
+              <p className="max-h-40 overflow-scroll">{movie?.overview}</p>
             </div>
           </div>
         </section>

@@ -11,7 +11,7 @@ const Navbar = () => {
       <div className="left-0 top-0 mx-auto flex w-full max-w-7xl items-center justify-between text-slate-50">
         <Link href="/" className="flex items-center justify-start gap-2">
           <FaFilm className="-rotate-45 text-xl text-red-500" />
-          <span className="text-xl">TheCinephileHouse</span>
+          <span className="text-xl font-bold">TheCinephileHouse</span>
         </Link>
 
         <div className="hidden gap-2 md:flex">

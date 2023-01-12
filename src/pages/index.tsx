@@ -50,7 +50,9 @@ const Home: NextPage = () => {
           />
           <div className="absolute left-0 top-0 mx-auto flex h-full w-full max-w-7xl items-center justify-start bg-gradient-to-r from-black/75 px-4 md:px-20">
             <div className="max-w-md text-neutral-50">
-              <h1 className="text-5xl font-bold">{movie?.title} </h1>
+              <h1 className="text-4xl font-bold md:text-5xl">
+                {movie?.title}{" "}
+              </h1>
 
               <div className="py-2" />
 
@@ -77,7 +79,9 @@ const Home: NextPage = () => {
 
               <div className="py-2" />
 
-              <p className="max-h-40 overflow-scroll">{movie?.overview}</p>
+              <p className="max-h-40 overflow-scroll scrollbar-hide">
+                {movie?.overview}
+              </p>
             </div>
           </div>
         </section>

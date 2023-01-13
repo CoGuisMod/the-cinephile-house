@@ -4,13 +4,16 @@ import { useEffect, useState } from "react";
 
 import { api } from "../utils/api";
 
-import { FaClock, FaRegClock, FaRegBookmark, FaRegHeart } from "react-icons/fa";
+import { FaRegClock, FaRegHeart } from "react-icons/fa";
 import Navbar from "../components/Navbar";
+import MoviesSlider from "../components/MoviesSlider";
 
 const Home: NextPage = () => {
-  const [movie, setMovie] = useState({});
+  const [randomMovie, setRandomMovie] = useState<any>({});
 
-  const movies = api.movie.getPopularMovies.useQuery().data;
+  const popularMovies = api.movie.getPopularMovies.useQuery().data;
+  const upcomingMovies = api.movie.getUpcomingMovies.useQuery().data;
+  const topRatedMovies = api.movie.getTopRatedMovies.useQuery().data;
 
   useEffect(() => {
     const getRandomMovie = () => {
@@ -18,15 +21,13 @@ const Home: NextPage = () => {
       const max = 20;
       const randomIndex = Math.floor(Math.random() * (max - min) + min);
 
-      setMovie(movies.results[randomIndex]);
+      setRandomMovie(popularMovies.results[randomIndex]);
     };
 
-    if (movies?.results) {
+    if (popularMovies?.results) {
       getRandomMovie();
     }
-  }, [movies?.results]);
-
-  console.log(movies?.results);
+  }, [popularMovies?.results]);
 
   return (
     <>
@@ -44,14 +45,14 @@ const Home: NextPage = () => {
       <main>
         <section className="relative h-screen w-full">
           <img
-            src={`https://image.tmdb.org/t/p/original${movie?.backdrop_path}`}
+            src={`https://image.tmdb.org/t/p/original${randomMovie?.backdrop_path}`}
             alt=""
             className="h-full w-full object-cover object-center"
           />
           <div className="absolute left-0 top-0 mx-auto flex h-full w-full max-w-7xl items-center justify-start bg-gradient-to-r from-black/75 px-4 md:px-20">
             <div className="max-w-md text-neutral-50">
               <h1 className="text-4xl font-bold md:text-5xl">
-                {movie?.title}{" "}
+                {randomMovie?.title}{" "}
               </h1>
 
               <div className="py-2" />
@@ -59,7 +60,7 @@ const Home: NextPage = () => {
               <p className="font-medium">
                 TMDB Rating:{" "}
                 <span className="rounded-md bg-neutral-50 px-2 py-1 text-sm text-black">
-                  {movie?.vote_average}&#47;10
+                  {randomMovie?.vote_average}&#47;10
                 </span>
               </p>
 
@@ -80,10 +81,34 @@ const Home: NextPage = () => {
               <div className="py-2" />
 
               <p className="max-h-40 overflow-scroll scrollbar-hide">
-                {movie?.overview}
+                {randomMovie?.overview}
               </p>
             </div>
           </div>
+        </section>
+
+        <section className="mx-auto min-h-screen w-full max-w-7xl px-4 pt-8">
+          <MoviesSlider
+            sliderId="popularMovies"
+            sliderTitle="Popular movies"
+            movies={popularMovies?.results}
+          />
+
+          <div className="py-4" />
+
+          <MoviesSlider
+            sliderId="upcomingMovies"
+            sliderTitle="Upcoming movies"
+            movies={upcomingMovies?.results}
+          />
+
+          <div className="py-4" />
+
+          <MoviesSlider
+            sliderId="topRatedMovies"
+            sliderTitle="Top rated movies"
+            movies={topRatedMovies?.results}
+          />
         </section>
       </main>
     </>

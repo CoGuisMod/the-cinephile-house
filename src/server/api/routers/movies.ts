@@ -22,4 +22,20 @@ export const movieRouter = createTRPCRouter({
 
     return movies.json();
   }),
+
+  getUpcomingMovies: publicProcedure.query(async ({}) => {
+    const movies = await fetch(
+      `https://api.themoviedb.org/3/movie/upcoming?api_key=${env.TMDB_API_KEY}&language=en-US&page=1`
+    );
+
+    return movies.json();
+  }),
+
+  getTopRatedMovies: publicProcedure.query(async ({}) => {
+    const movies = await fetch(
+      `https://api.themoviedb.org/3/movie/top_rated?api_key=${env.TMDB_API_KEY}&language=en-US&page=1`
+    );
+
+    return movies.json();
+  }),
 });

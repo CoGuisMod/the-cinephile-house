@@ -7,6 +7,7 @@ import { api } from "../utils/api";
 import { FaRegClock, FaRegHeart } from "react-icons/fa";
 import Navbar from "../components/Navbar";
 import MoviesSlider from "../components/MoviesSlider";
+import Link from "next/link";
 
 const Home: NextPage = () => {
   const [randomMovie, setRandomMovie] = useState<any>({});
@@ -42,7 +43,7 @@ const Home: NextPage = () => {
 
       <Navbar />
 
-      <main>
+      <main className="pb-4">
         <section className="relative h-screen w-full">
           <img
             src={`https://image.tmdb.org/t/p/original${randomMovie?.backdrop_path}`}
@@ -111,6 +112,17 @@ const Home: NextPage = () => {
           />
         </section>
       </main>
+
+      <footer className="w-full border-t border-t-slate-200 py-2 text-center font-medium text-black/75">
+        Built by{" "}
+        <Link
+          href="https://iamcamilomillan.vercel.app/"
+          target="_blank"
+          className="text-purple-600 transition-colors duration-200 ease-in-out hover:text-purple-400"
+        >
+          Camilo Millan
+        </Link>
+      </footer>
     </>
   );
 };

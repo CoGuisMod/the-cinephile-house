@@ -1,13 +1,12 @@
+import { useEffect, useState } from "react";
 import { type NextPage } from "next";
 import Head from "next/head";
-import { useEffect, useState } from "react";
 
 import { api } from "../utils/api";
 
-import { FaRegClock, FaRegHeart } from "react-icons/fa";
-import Navbar from "../components/Navbar";
 import MoviesSlider from "../components/MoviesSlider";
-import Link from "next/link";
+
+import { FaRegClock, FaRegHeart } from "react-icons/fa";
 
 const Home: NextPage = () => {
   const [randomMovie, setRandomMovie] = useState<any>({});
@@ -40,8 +39,6 @@ const Home: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
-      <Navbar />
 
       <main className="pb-4">
         <section className="relative h-screen w-full">
@@ -112,17 +109,6 @@ const Home: NextPage = () => {
           />
         </section>
       </main>
-
-      <footer className="w-full border-t border-t-slate-200 py-2 text-center font-medium text-black/75">
-        Built by{" "}
-        <Link
-          href="https://iamcamilomillan.vercel.app/"
-          target="_blank"
-          className="text-purple-600 transition-colors duration-200 ease-in-out hover:text-purple-400"
-        >
-          Camilo Millan
-        </Link>
-      </footer>
     </>
   );
 };

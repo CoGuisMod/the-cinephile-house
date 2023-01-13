@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { useState } from "react";
 
-import { FaFilm } from "react-icons/fa";
+import NavMobile from "./NavMobile";
+
+import { FaBars, FaFilm, FaPlus } from "react-icons/fa";
 
 const Navbar = () => {
   const [showNavMobile, setShowNavMobile] = useState(false);
@@ -9,10 +11,25 @@ const Navbar = () => {
   return (
     <header className="absolute z-10 w-full p-4">
       <div className="left-0 top-0 mx-auto flex w-full max-w-7xl items-center justify-between text-slate-50">
-        <Link href="/" className="flex items-center justify-start gap-2">
+        <Link href="/" className="z-20 flex items-center justify-start gap-2">
           <FaFilm className="-rotate-45 text-xl text-red-500" />
           <span className="text-xl font-bold">TheCinephileHouse</span>
         </Link>
+
+        <button
+          onClick={() => {
+            setShowNavMobile(!showNavMobile);
+          }}
+          className="z-20 md:hidden"
+        >
+          {showNavMobile ? (
+            <FaPlus className="rotate-45 text-2xl" />
+          ) : (
+            <FaBars className="text-2xl" />
+          )}
+        </button>
+
+        <NavMobile showNavMobile={showNavMobile} />
 
         <div className="hidden gap-2 md:flex">
           <Link

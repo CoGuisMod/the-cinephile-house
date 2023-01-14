@@ -13,12 +13,31 @@ const Signin: NextPage = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
-
-    await signin(email, password);
-    router.push("/");
+    setError("");
+    if (email === "") {
+      setError("The email is required.");
+      return;
+    }
+    if (password === "") {
+      setError("The password is required.");
+      return;
+    }
+    try {
+      await signin(email, password);
+      router.push("/");
+    } catch (e: any) {
+      setError(e.message);
+      if (e.message === "Firebase: Error (auth/user-not-found).") {
+        setError("The email doesn't exist.");
+      }
+      if (e.message === "Firebase: Error (auth/wrong-password).") {
+        setError("The password is incorrect.");
+      }
+    }
   };
 
   return (
@@ -35,6 +54,15 @@ const Signin: NextPage = () => {
         </h1>
 
         <div className="py-4" />
+
+        {error ? (
+          <div>
+            <p className="rounded-md bg-red-500 px-2 py-1 text-lg font-medium">
+              {error}
+            </p>
+            <div className="py-4" />
+          </div>
+        ) : null}
 
         <form
           onSubmit={handleSubmit}

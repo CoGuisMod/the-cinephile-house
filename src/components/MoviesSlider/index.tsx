@@ -11,12 +11,12 @@ const MoviesSlider = ({
   movies: any;
 }) => {
   const slideLeft = () => {
-    var slider = document.getElementById(sliderId);
+    var slider: any = document.getElementById(sliderId);
     slider.scrollLeft = slider.scrollLeft - 500;
   };
 
   const slideRight = () => {
-    var slider = document.getElementById(sliderId);
+    var slider: any = document.getElementById(sliderId);
     slider.scrollLeft = slider.scrollLeft + 500;
   };
 

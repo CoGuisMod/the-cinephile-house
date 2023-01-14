@@ -2,14 +2,24 @@ import { useState } from "react";
 import { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
+import Router from "next/router";
+
+import { useAuth } from "../../context/AuthContext";
 
 const Signup: NextPage = () => {
+  const { signup } = useAuth();
+
+  const router = Router;
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const handleSubmit = (e: any) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
+
+    await signup(email, password);
+    router.push("/");
   };
 
   return (

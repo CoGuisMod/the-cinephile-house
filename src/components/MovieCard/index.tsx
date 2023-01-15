@@ -2,7 +2,12 @@ import { useState } from "react";
 import { FaRegBookmark, FaRegClock, FaRegHeart } from "react-icons/fa";
 import { HiDotsHorizontal } from "react-icons/hi";
 
-const MovieCard = ({ movie }: { movie: any }) => {
+type movieType = {
+  title: string;
+  poster_path: string;
+};
+
+const MovieCard = ({ movie }: { movie: movieType }) => {
   const [showMoreOptions, setShowMoreOptions] = useState(false);
 
   return (

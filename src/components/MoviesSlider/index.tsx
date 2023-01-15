@@ -8,15 +8,15 @@ const MoviesSlider = ({
 }: {
   sliderId: string;
   sliderTitle: string;
-  movies: any;
+  movies: Array<any>;
 }) => {
   const slideLeft = () => {
-    var slider: any = document.getElementById(sliderId);
+    let slider: any = document.getElementById(sliderId);
     slider.scrollLeft = slider.scrollLeft - 500;
   };
 
   const slideRight = () => {
-    var slider: any = document.getElementById(sliderId);
+    let slider: any = document.getElementById(sliderId);
     slider.scrollLeft = slider.scrollLeft + 500;
   };
 

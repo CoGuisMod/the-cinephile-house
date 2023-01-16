@@ -5,6 +5,9 @@ import Head from "next/head";
 import { api } from "../utils/api";
 import getRandonNumber from "../utils/getRandomIndex";
 
+import { useAuth } from "../context/AuthContext";
+import { useData } from "../context/DataContext";
+
 import LoadingScreen from "../components/LoadingScreen";
 import HeroSection from "../components/HeroSection";
 import MoviesSlider from "../components/MoviesSlider";
@@ -12,6 +15,9 @@ import MoviesSlider from "../components/MoviesSlider";
 const Home: NextPage = () => {
   const [randomMovie, setRandomMovie] = useState<any>({});
   const [isLoading, setIsLoading] = useState(true);
+
+  const { user } = useAuth();
+  const { getUserData, updateData, message } = useData();
 
   const popularMovies = api.movie.getPopularMovies.useQuery().data;
   const upcomingMovies = api.movie.getUpcomingMovies.useQuery().data;
@@ -29,6 +35,16 @@ const Home: NextPage = () => {
     }
   }, [popularMovies?.results]);
 
+  useEffect(() => {
+    const getUser = async () => {
+      await getUserData(user.email);
+    };
+
+    if (user) {
+      getUser();
+    }
+  }, [user, updateData]);
+
   return (
     <>
       <Head>
@@ -44,6 +60,13 @@ const Home: NextPage = () => {
       <main>
         {/* Loading screen */}
         {isLoading ? <LoadingScreen /> : null}
+
+        {/* Message card */}
+        {message ? (
+          <div className="fixed left-1/2 top-4 z-20 -translate-x-1/2 rounded-md bg-green-400 px-2 py-1 font-medium text-black">
+            {message}
+          </div>
+        ) : null}
 
         {/* Hero section */}
         <HeroSection

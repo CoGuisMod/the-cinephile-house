@@ -10,6 +10,14 @@ const Footer = () => {
         className="text-purple-600 transition-colors duration-200 ease-in-out hover:text-purple-400"
       >
         Camilo Millan
+      </Link>{" "}
+      &#9679;{" "}
+      <Link
+        href="https://github.com/CoGuisMod/the-cinephile-house"
+        target="_blank"
+        className="text-purple-600 transition-colors duration-200 ease-in-out hover:text-purple-400"
+      >
+        Github Repository
       </Link>
     </footer>
   );

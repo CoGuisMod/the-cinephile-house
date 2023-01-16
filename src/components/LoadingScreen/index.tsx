@@ -9,7 +9,7 @@ const LoadingScreen = () => {
         <PuffLoader color="#ef4444" size={150} />
 
         {/* Icon */}
-        <FaFilm className="text-4x absolute -rotate-45" />
+        <FaFilm className="absolute -rotate-45 text-4xl" />
       </div>
     </div>
   );

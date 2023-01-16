@@ -1,5 +1,8 @@
 import Image from "next/image";
 
+import { useAuth } from "../../context/AuthContext";
+import { useData } from "../../context/DataContext";
+
 import { FaRegClock, FaRegHeart } from "react-icons/fa";
 
 const HeroSection = ({
@@ -11,6 +14,30 @@ const HeroSection = ({
   isLoading: boolean;
   setIsLoading: any;
 }) => {
+  const { userData, addToFavorites, addToWatchLater, setMessage } = useData();
+
+  const { user } = useAuth();
+
+  const handleAddToFavorites = async () => {
+    if (!user) {
+      console.log("Log in first");
+      return;
+    }
+
+    await addToFavorites(user.email, [...userData.favorites, movie.id]);
+    setMessage("Added to favorites");
+  };
+
+  const handleAddToWatchLater = async () => {
+    if (!user) {
+      console.log("Log in first");
+      return;
+    }
+
+    await addToWatchLater(user.email, [...userData.watchLater, movie.id]);
+    setMessage("Added to watch later");
+  };
+
   return (
     <section className="relative h-screen w-full">
       {/* Hero background image */}
@@ -40,12 +67,18 @@ const HeroSection = ({
           <div className="py-4" />
 
           <div className="flex gap-2">
-            <button className="flex items-center gap-2 rounded bg-slate-50 px-2 py-1 text-xl font-medium text-black">
+            <button
+              onClick={() => handleAddToFavorites()}
+              className="flex items-center gap-2 rounded bg-slate-50 px-2 py-1 text-xl font-medium text-black"
+            >
               <FaRegHeart className="text-lg" />
               Favorites
             </button>
 
-            <button className="flex items-center gap-2 rounded bg-slate-50/50 px-2 py-1 text-xl font-medium text-black">
+            <button
+              onClick={() => handleAddToWatchLater()}
+              className="flex items-center gap-2 rounded bg-slate-50/50 px-2 py-1 text-xl font-medium text-black"
+            >
               <FaRegClock className="text-lg" />
               Watch Later
             </button>

@@ -6,6 +6,8 @@ import Router from "next/router";
 
 import { useAuth } from "../../context/AuthContext";
 
+import LoadingScreen from "../../components/LoadingScreen";
+
 const Signup: NextPage = () => {
   const { signup } = useAuth();
 
@@ -14,6 +16,8 @@ const Signup: NextPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState("");
 
   const handleSubmit = async (e: any) => {
@@ -51,12 +55,19 @@ const Signup: NextPage = () => {
 
   return (
     <section className="relative h-screen w-full">
+      {/* Loading screen */}
+      {isLoading ? <LoadingScreen /> : null}
+
+      {/* Backgroun image */}
       <Image
         src="/authImage.jpg"
         alt=""
         fill
+        onLoadingComplete={() => setIsLoading(false)}
         className="object-cover object-center"
       />
+
+      {/* Sign up */}
       <div className="absolute flex h-full w-full flex-col items-center justify-center bg-slate-900/75 text-slate-50">
         <h1 className="text-2xl">
           Sign in to <span className="font-bold">TheCinephileHouse</span>

@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import { type NextPage } from "next";
 import Head from "next/head";
-import Image from "next/image";
 
 import { api } from "../utils/api";
+import getRandonNumber from "../utils/getRandomIndex";
 
+import LoadingScreen from "../components/LoadingScreen";
+import HeroSection from "../components/HeroSection";
 import MoviesSlider from "../components/MoviesSlider";
-
-import { PuffLoader } from "react-spinners";
-import { FaFilm, FaRegClock, FaRegHeart } from "react-icons/fa";
 
 const Home: NextPage = () => {
   const [randomMovie, setRandomMovie] = useState<any>({});
@@ -20,9 +19,7 @@ const Home: NextPage = () => {
 
   useEffect(() => {
     const getRandomMovie = () => {
-      const min = 0;
-      const max = 20;
-      const randomIndex = Math.floor(Math.random() * (max - min) + min);
+      const randomIndex = getRandonNumber(0, 20);
 
       setRandomMovie(popularMovies.results[randomIndex]);
     };
@@ -31,8 +28,6 @@ const Home: NextPage = () => {
       getRandomMovie();
     }
   }, [popularMovies?.results]);
-
-  console.log(isLoading);
 
   return (
     <>
@@ -45,69 +40,17 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="pb-4">
-        <section className="relative h-screen w-full">
-          {isLoading ? (
-            <div className="absolute left-0 top-0 z-10 flex h-full w-full items-center justify-center bg-black text-slate-50">
-              <div className="relative flex items-center justify-center">
-                <PuffLoader
-                  color="#ef4444"
-                  loading={isLoading}
-                  size={150}
-                  aria-label="Loading Spinner"
-                  data-testid="loader"
-                />
-                <FaFilm className="absolute -rotate-45 text-4xl text-red-500" />
-              </div>
-            </div>
-          ) : null}
+      {/* Content */}
+      <main>
+        {/* Loading screen */}
+        {isLoading ? <LoadingScreen /> : null}
 
-          <Image
-            src={`https://image.tmdb.org/t/p/original${randomMovie?.backdrop_path}`}
-            alt=""
-            width="1920"
-            height="1080"
-            onLoadingComplete={() => setIsLoading(false)}
-            className="h-full w-full object-cover object-center"
-          />
-
-          <div className="absolute left-0 top-0 mx-auto flex h-full w-full max-w-7xl items-center justify-start bg-gradient-to-r from-black/75 px-4 md:px-20">
-            <div className="max-w-md text-neutral-50">
-              <h1 className="text-4xl font-bold md:text-5xl">
-                {randomMovie?.title}{" "}
-              </h1>
-
-              <div className="py-2" />
-
-              <p className="font-medium">
-                TMDB Rating:{" "}
-                <span className="rounded-md bg-neutral-50 px-2 py-1 text-sm text-black">
-                  {randomMovie?.vote_average}&#47;10
-                </span>
-              </p>
-
-              <div className="py-4" />
-
-              <div className="flex gap-2">
-                <button className="flex items-center gap-2 rounded bg-slate-50 px-2 py-1 text-xl font-medium text-black">
-                  <FaRegHeart className="text-lg" />
-                  Favorites
-                </button>
-
-                <button className="flex items-center gap-2 rounded bg-slate-50/50 px-2 py-1 text-xl font-medium text-black">
-                  <FaRegClock className="text-lg" />
-                  Watch Later
-                </button>
-              </div>
-
-              <div className="py-2" />
-
-              <p className="max-h-40 overflow-scroll scrollbar-hide">
-                {randomMovie?.overview}
-              </p>
-            </div>
-          </div>
-        </section>
+        {/* Hero section */}
+        <HeroSection
+          movie={randomMovie}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+        />
 
         <section className="mx-auto min-h-screen w-full max-w-7xl px-4 pt-8">
           <MoviesSlider

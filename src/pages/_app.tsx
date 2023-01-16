@@ -13,7 +13,11 @@ const MyApp: AppType = ({ Component, pageProps }) => {
   return (
     <AuthContextProvider>
       <Navbar />
+
       <Component {...pageProps} />
+
+      <div className="py-2" />
+
       <Footer />
     </AuthContextProvider>
   );

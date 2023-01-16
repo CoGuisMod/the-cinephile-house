@@ -14,12 +14,39 @@ const Signup: NextPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    await signup(email, password);
-    router.push("/");
+    setError("");
+
+    if (email === "") {
+      setError("The email is required.");
+      return;
+    }
+    if (password === "") {
+      setError("The password is required.");
+      return;
+    }
+    if (password.length < 6) {
+      setError("The password should be at least 6 characters.");
+      return;
+    }
+    if (password !== confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
+    try {
+      await signup(email, password);
+      router.push("/browse");
+    } catch (e: any) {
+      setError(e.message);
+      if (e.message === "Firebase: Error (auth/email-already-in-use).") {
+        setError("The email already exist.");
+      }
+    }
   };
 
   return (
@@ -36,6 +63,15 @@ const Signup: NextPage = () => {
         </h1>
 
         <div className="py-4" />
+
+        {error ? (
+          <div>
+            <p className="rounded-md bg-red-500 px-2 py-1 text-lg font-medium">
+              {error}
+            </p>
+            <div className="py-4" />
+          </div>
+        ) : null}
 
         <form
           onSubmit={handleSubmit}

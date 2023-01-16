@@ -17,7 +17,9 @@ const Signin: NextPage = () => {
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+
     setError("");
+
     if (email === "") {
       setError("The email is required.");
       return;
@@ -26,6 +28,7 @@ const Signin: NextPage = () => {
       setError("The password is required.");
       return;
     }
+
     try {
       await signin(email, password);
       router.push("/");
